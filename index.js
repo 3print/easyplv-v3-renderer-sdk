@@ -102,4 +102,26 @@ function post(headers={}, json={}) {
   });
 }
 
-export {post, configure}
+function impose(json={}) {
+  return new Promise(function (resolve, reject) {
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", `${ENDPOINT}/impose`);
+
+    xhr.onload = function () {
+      if (xhr.status >= 400) {
+        console.log('xhr status >= 400');
+        return reject(new Error(xhr.response.message));
+      }
+
+      resolve(xhr.responseURL);
+    };
+
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(json));
+
+  });
+
+}
+
+export {post, configure, impose}
