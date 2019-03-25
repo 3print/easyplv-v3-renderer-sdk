@@ -124,4 +124,70 @@ function impose(json={}) {
 
 }
 
-export {post, configure, impose}
+let targetWindow;
+function target(window) {
+  targetWindow = window;
+}
+
+function focus(element) {
+  let selector;
+
+  switch (element) {
+    case 'date':
+      selector = '.layout__header__date span';
+      break;
+    case 'title':
+      selector = '.title';
+      break;
+    case 'subtitle':
+      selector = '.subtitle';
+      break;
+    case 'logo':
+      selector = '.logo img';
+      break;
+    case 'energy':
+      selector = '.energy';
+      break;
+    case 'desc':
+      selector = '.desc';
+      break;
+    case 'details':
+      selector = '.details';
+      break;
+    case 'stickers':
+      selector = '.stickers';
+      break;
+    case 'image':
+      selector = '.body__image img';
+      break;
+    case 'price':
+      selector = '.price';
+      break;
+    case 'subprice':
+      selector = '.subprice';
+      break;
+    case 'tecla':
+      selector = '.tecla__in';
+      break;
+    case 'origin':
+      selector = '.origin__in ';
+      break;
+    case 'mentions':
+      selector = '.body__mentions ';
+      break;
+    case 'gencode':
+      selector = '.body__gencode img ';
+      break;
+    
+    default:
+      throw new Error('Unsupported element');
+      break;
+  }
+
+  targetWindow.postMessage({
+    action: 'focus',
+    selector: selector
+  }, '*');
+}
+
+export {post, configure, impose, target, focus}
